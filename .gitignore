@@ -1,2 +1,4 @@
-positions-custom.csv
+data/**.csv
 *.pyc
+build/*
+*.egg-info
