@@ -1,5 +1,5 @@
 import unittest
-from pbal.position import load
+from src.pbal.position import load
 
 
 class PositionTestCase(unittest.TestCase):

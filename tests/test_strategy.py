@@ -1,6 +1,6 @@
 import unittest
-from pbal.strategy import Strategy
-from pbal.position import load
+from src.pbal.strategy import Strategy
+from src.pbal.position import load
 
 
 class StrategyTestCase(unittest.TestCase):

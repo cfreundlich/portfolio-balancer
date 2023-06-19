@@ -1,7 +1,6 @@
 import argparse
 from pbal.strategy import Strategy
 from pbal.position import load
-from pprint import pprint
 
 
 def pbal():
@@ -23,6 +22,6 @@ def pbal():
     initial_positions = load(args.data)
     # now Strategy is initialized with initial_positions and cash
     strategy = Strategy(initial_positions, args.cash)
-    pprint(strategy.proposed_purchase)
 
-
+    strategy.print_initial_values()
+    strategy.print_strategy()
