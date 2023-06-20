@@ -1,7 +1,7 @@
 [project]
 name = "pbal"
 version = "0.0.1"
-dependencies = ["numpy"]
+dependencies = ["numpy", "scipy"]
 
 [project.scripts]
 pbal = "pbal:pbal"

@@ -1,5 +1,6 @@
 import numpy as np
 import logging
+from scipy.optimize import Bounds, LinearConstraint, minimize
 
 
 logging.basicConfig(level=logging.INFO)
@@ -29,22 +30,48 @@ class Strategy:
         return self._total_funds() / self.n
 
     def _make_strategy(self):
-        A = np.vstack(tup=(
-            np.ones((1, self.n)),
-            np.eye(self.n)
+
+        Q1 = np.hstack(tup=(
+            np.eye(self.n - 1),
+            np.zeros((self.n-1, 1))
         ))
+        Q2 = np.hstack(tup=(
+            np.zeros((self.n-1, 1)),
+            np.eye(self.n - 1)
+        ))
+        Q = Q1 - Q2
+        p = np.array([p_i.cash for p_i in self.initial_positions])
 
-        b = np.array(
-            [self.cash_to_invest] +
-            [
-                self._desired_investment_per_symbol() - p.cash
-                for p in self.initial_positions
-            ]
+        QTQ = Q.T.dot(Q)
+
+        def f(x):
+            return (x + p).T.dot(QTQ).dot(x + p)
+        
+        def df(x):
+            return 2 * QTQ.dot(x + p)
+        
+        def ddf(x):
+            return 2 * QTQ
+
+        # def h(x):
+        #     return sum(x) - self.cash_to_invest
+        
+        bounds = Bounds(lb=0.)
+        linear_constraint = LinearConstraint(
+            A=np.ones(self.n),
+            lb=self.cash_to_invest,
+            ub=self.cash_to_invest)
+        
+        x0 = np.zeros(self.n)
+        return minimize(
+            fun=f,
+            x0=np.zeros(self.n),
+            method='trust-constr', 
+            jac=df, 
+            hess=ddf,
+            constraints=[linear_constraint],
+            options={'verbose': 1}, bounds=bounds
         )
-
-        # Solve for x in Ax = b using least squares method
-        proposed_purchase, _, _, _ = np.linalg.lstsq(A, b, rcond=None)
-        return proposed_purchase
 
     def print_strategy(self):
         print('----\nStrategy:')
