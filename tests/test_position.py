@@ -1,12 +1,9 @@
 import unittest
-from src.pbal.position import load
+from src.pbal.csv import load
 
 
 class PositionTestCase(unittest.TestCase):
-
     def test_basic(self):
-        positions = load('tests/data/basic.csv')
-        self.assertEqual(positions[0].symbol, 'FOO')
-        self.assertEqual(positions[0].cash, 50000.)
-        self.assertEqual(positions[1].symbol, 'BAR')
-        self.assertEqual(positions[1].cash, 100000.)
+        positions = load("tests/data/basic.csv")
+        self.assertEqual(positions["FOO"]["initial_value"], 50000.0)
+        self.assertEqual(positions["BAR"]["initial_value"], 100000.0)
