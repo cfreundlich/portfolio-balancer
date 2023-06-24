@@ -1,6 +1,7 @@
 import argparse
 from pprint import pprint
 from src.pbal.hard_rebal import HardRebal
+from src.pbal.never_sell import NeverSell
 from src.pbal.csv import load
 
 
@@ -30,9 +31,9 @@ def pbal():
     parser.add_argument(
         "-s",
         "--strategy",
-        type=str,
-        default="hard_rebal",
-        help="Strategy to use to rebalance portfolio. Default is hard_rebal",
+        choices=["hard_rebalance", "never_sell"],
+        default="never_sell",
+        help="Strategy to use to rebalance portfolio. Default is never_sell",
     )
 
     args = parser.parse_args()
@@ -40,7 +41,13 @@ def pbal():
     # use the arguments
     # assuming load function takes data file path as input
     initial_positions = load(args.data)
-    # now Strategy is initialized with initial_positions and cash
-    strategy = HardRebal(initial_positions, args.cash)
 
-    pprint(strategy.proposal)
+    # now Strategy is initialized with initial_positions and cash
+    if args.strategy == "hard_rebalance":
+        strategy = HardRebal
+    elif args.strategy == "never_sell":
+        strategy = NeverSell
+    else:
+        raise ValueError(args.strategy)
+
+    pprint(strategy(initial_positions, args.cash).proposal)
