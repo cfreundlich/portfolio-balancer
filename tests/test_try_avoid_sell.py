@@ -1,5 +1,5 @@
 import unittest
-from src.pbal.never_sell import NeverSell
+from src.pbal.try_avoid_sell import TryAvoidSell
 from src.pbal.csv import load
 
 
@@ -7,7 +7,7 @@ class HardRebalTestCase(unittest.TestCase):
     @staticmethod
     def _basic(cash):
         positions = load("tests/data/basic.csv")
-        return NeverSell(positions, cash)
+        return TryAvoidSell(positions, cash)
 
     def test_basic_0_new_investment(self):
         s = self._basic(0.0)

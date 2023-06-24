@@ -1,7 +1,7 @@
 import argparse
 from pprint import pprint
 from src.pbal.hard_rebal import HardRebal
-from src.pbal.never_sell import NeverSell
+from src.pbal.try_avoid_sell import TryAvoidSell
 from src.pbal.csv import load
 
 
@@ -31,9 +31,9 @@ def pbal():
     parser.add_argument(
         "-s",
         "--strategy",
-        choices=["hard_rebalance", "never_sell"],
+        choices=["hard_rebalance", "h", "try_avoid_sell", "t"],
         default="never_sell",
-        help="Strategy to use to rebalance portfolio. Default is never_sell",
+        help="Strategy to use to rebalance portfolio. Default is try_avoid_sell",
     )
 
     args = parser.parse_args()
@@ -43,10 +43,10 @@ def pbal():
     initial_positions = load(args.data)
 
     # now Strategy is initialized with initial_positions and cash
-    if args.strategy == "hard_rebalance":
+    if args.strategy in {"hard_rebalance", "h"}:
         strategy = HardRebal
-    elif args.strategy == "never_sell":
-        strategy = NeverSell
+    elif args.strategy in {"try_avoid_sell", "t"}:
+        strategy = TryAvoidSell
     else:
         raise ValueError(args.strategy)
 
