@@ -1,5 +1,5 @@
 import numpy as np
-from src.pbal.strategy import Strategy
+from .strategy import Strategy
 
 
 class HardRebal(Strategy):

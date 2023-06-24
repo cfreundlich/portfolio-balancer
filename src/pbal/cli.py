@@ -1,8 +1,9 @@
 import argparse
 from pprint import pprint
-from src.pbal.hard_rebal import HardRebal
-from src.pbal.try_avoid_sell import TryAvoidSell
-from src.pbal.csv import load
+from .hard_rebal import HardRebal
+from .try_avoid_sell import TryAvoidSell
+from .csv import load
+
 
 
 def pbal():
@@ -32,7 +33,7 @@ def pbal():
         "-s",
         "--strategy",
         choices=["hard_rebalance", "h", "try_avoid_sell", "t"],
-        default="never_sell",
+        default="try_avoid_sell",
         help="Strategy to use to rebalance portfolio. Default is try_avoid_sell",
     )
 

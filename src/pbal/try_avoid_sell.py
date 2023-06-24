@@ -1,6 +1,6 @@
 import heapq
 from math import copysign
-from src.pbal.strategy import Strategy
+from .strategy import Strategy
 
 
 class TryAvoidSell(Strategy):
