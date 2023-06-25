@@ -1,5 +1,5 @@
 import argparse
-from pprint import pprint
+from tabulate import tabulate
 from .hard_rebal import HardRebal
 from .try_avoid_sell import TryAvoidSell
 from .csv import load
@@ -51,4 +51,8 @@ def pbal():
     else:
         raise ValueError(args.strategy)
 
-    pprint(strategy(initial_positions, args.cash).proposal)
+    # pprint(strategy(initial_positions, args.cash).proposal)
+    proposal = strategy(initial_positions, args.cash).proposal
+    table = [['symbol', 'initial_value', 'change']]
+    table += [[k, v['initial_value'], v['change']] for k,v in proposal.items()]
+    print(tabulate(table))
