@@ -28,3 +28,25 @@ class HardRebalTestCase(unittest.TestCase):
         s = self._basic(-10000.0)
         self.assertEqual(s.proposal["FOO"]["BuyVal"], 0.0)
         self.assertEqual(s.proposal["BAR"]["BuyVal"], -10000.0)
+
+    def test_cap_loss_tiebreaker(self):
+        positions = load("tests/data/caploss-foo.csv")
+        s = TryAvoidSell(positions, -1000)
+        self.assertEqual(s.proposal["FOO"]["BuyVal"], -1000.0)
+        self.assertEqual(s.proposal["BAR"]["BuyVal"], 0)
+        self.assertEqual(s.proposal["BUZ"]["BuyVal"], 0)
+
+    def test_cap_loss_tiebreaker(self):
+        positions = load("tests/data/caploss-bar.csv")
+        s = TryAvoidSell(positions, -1000)
+        self.assertEqual(s.proposal["FOO"]["BuyVal"], 0)
+        self.assertEqual(s.proposal["BAR"]["BuyVal"], -1000.0)
+        self.assertEqual(s.proposal["BUZ"]["BuyVal"], 0)
+
+    def test_cap_loss_tiebreaker(self):
+        positions = load("tests/data/caploss-buz.csv")
+        s = TryAvoidSell(positions, -1000)
+        self.assertEqual(s.proposal["FOO"]["BuyVal"], 0)
+        self.assertEqual(s.proposal["BAR"]["BuyVal"], 0)
+        self.assertEqual(s.proposal["BUZ"]["BuyVal"], -1000.0)
+

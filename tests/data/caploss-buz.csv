@@ -1,0 +1,4 @@
+"Symbol","PositionValue","MarkPrice","FifoPnlUnrealized"
+"FOO","50000.0","10.0","0"
+"BAR","50000.0","10.0","0"
+"BUZ","50000.0","10.0","-1000.00"
