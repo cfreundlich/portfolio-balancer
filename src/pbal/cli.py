@@ -34,13 +34,20 @@ def _parser():
     )
 
     # named argument for the strategy to employ
-
     parser.add_argument(
         "-s",
         "--strategy",
         choices=list(STRATEGIES.keys()),
         default="try_avoid_sell",
         help="Strategy to use to rebalance portfolio. Default is try_avoid_sell",
+    )
+
+    # named argument for verbosity
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action='store_true',
+        help="Contorl printing",
     )
 
     return parser.parse_args()
@@ -57,7 +64,7 @@ def pbal():
     strategy = STRATEGIES[args.strategy]
 
     # pprint(strategy(initial_positions, args.cash).proposal)
-    s = strategy(initial_positions, args.cash)
+    s = strategy(initial_positions, args.cash, args.verbose)
 
     table = s.table()
     print(tabulate(table[1:], headers=table[0]))

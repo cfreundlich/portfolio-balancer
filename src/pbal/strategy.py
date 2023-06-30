@@ -1,4 +1,5 @@
 import logging
+from pprint import pprint
 
 
 logging.basicConfig(level=logging.INFO)
@@ -6,11 +7,13 @@ LOGGER = logging.getLogger()
 
 
 class Strategy:
-    def __init__(self, positions, cash_to_invest=0.0):
+    def __init__(self, positions, cash_to_invest=0.0, verbose=False):
         self._target_net_liquidity = cash_to_invest + sum(
             v["PositionValue"] for v in positions.values()
         )
         self.proposal = self._make_strategy(positions, cash_to_invest)
+        if verbose:
+            pprint(positions)
 
     def _make_strategy(self, positions, cash_to_invest):
         raise NotImplementedError
