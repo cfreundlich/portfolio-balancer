@@ -3,7 +3,7 @@ The basic idea of these portfolio balancing strategies is that you set a target 
 
 This makes trading very boring, but it minimizes variance without sacrificing expected value.  It also gives you some flexibility to buy low and sell high.
 
-## Setting a target
+## [Setting a target](#setting-a-target)
 Basic idea of a target in this code is:
 - The individual wants a roughly equal investment in each asset in their portfolio.
 - You can pick whatever collection of assets you want, but the general idea is that you span a broad array of sectors and market capitalizations using low cost ETFs, for example, you may want to target 10% allocation to each of these ten ETFs:
@@ -29,8 +29,8 @@ There are two strategies currently supported, both aimed at buying low.
 The default strategy is to avoid selling at all costs in order to avoid capital gains taxes, which would be [try_avoid_sell](./src/pbal/try_avoid_sell.py).
 
 ## Download Up-to-date portfolio data
-This code was written to use the IBKR Client Portal to automate rebalancing of a personal brokerage account.
-I have created a [Flex Query for myself](https://portal.interactivebrokers.com/AccountManagement/AmAuthentication?action=RM_FLEX_QUERIES) that creates a CSV in the format you see in the [tests](./tests/data).
+This code was written with the the IBKR margin trading account in mind.
+To make downloading the CSV easier, I created a [Flex Query](https://portal.interactivebrokers.com/AccountManagement/AmAuthentication?action=RM_FLEX_QUERIES) that creates a CSV in the format you see in the [tests](./tests/data).
 I can't share the Flex Query settings, but you should be able to figure them out.
 If you can't, then you probably should not be using this code.
 
@@ -41,11 +41,11 @@ You can use this as a CLI if you have your data saved as a csv:
 pip install .
 pbal
 ```
-This will suggest some trades you can make to push your portfolio allocations toward the target described in #Settingatarget.
+This will suggest some trades you can make to push your portfolio allocations toward the target described in #setting-a-target.
 
 Use the `--help` flag to explore ways to modify your strategy.
 
-# Using the IBKR Client Portal to autopmate trade execution
+# Using the IBKR Client Portal to automate trade execution
 This would be the last step to making this process extremely mindless and thus ideal for me.
 However, it is a work-in-progress.
 
