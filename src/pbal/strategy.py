@@ -6,8 +6,7 @@ LOGGER = logging.getLogger()
 
 
 class Strategy:
-    def __init__(self, positions, cash_to_invest=0.0, tol_zeros=3):
-        self._tol_zeros = 3
+    def __init__(self, positions, cash_to_invest=0.0):
         self._target_net_liquidity = cash_to_invest + sum(
             v["PositionValue"] for v in positions.values()
         )
