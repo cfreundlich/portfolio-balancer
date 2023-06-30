@@ -27,6 +27,7 @@ pbal
 ```
 
 But this code was written to use the IBKR Client Portal to automate rebalancing of a personal brokerage account.
+I have created a [Flex Query for myself](https://portal.interactivebrokers.com/AccountManagement/AmAuthentication?action=RM_FLEX_QUERIES) that creates a CSV in the format you see in the [tests](./tests/data).
 
 ## Use the IBKR Client Portal
 Follow the [IBKR Client Portal Quickstart Guide](https://interactivebrokers.github.io/cpwebapi/quickstart).
