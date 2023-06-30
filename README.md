@@ -1,33 +1,39 @@
 # portfolio-balance
 The basic idea of these portfolio balancing strategies is that you set a target and periodically (no more than once a quarter) trade in order to get closer to these targets.
 
-This makes trading very boring, but it minimizes variance without sacrificng expected value.  It also gives you some flexibility to buy low and sell high.
+This makes trading very boring, but it minimizes variance without sacrificing expected value.  It also gives you some flexibility to buy low and sell high.
 
 ## Setting a target
 Basic idea of a target in this code is:
 - The individual wants a roughly equal investment in each asset in their portfolio.
 - You can pick whatever collection of assets you want, but the general idea is that you span a broad array of sectors and market capitalizations using low cost ETFs, for example, you may want to target 10% allocation to each of these ten ETFs:
-  - FTEC
-  - VAW
-  - VCR
-  - VDC
-  - VHT
-  - VIS
-  - VNQ
-  - VOX
-  - VPU
-  - VSMAX
+  1. FTEC
+  1. VAW
+  1. VCR
+  1. VDC
+  1. VHT
+  1. VIS
+  1. VNQ
+  1. VOX
+  1. VPU
+  1. VSMAX
 
 Having a broad array of sector and market cap coverage is a simple way to minimize risk of any individual company or sector having a crisis.
-If avoids over-exposure on any area of the economy, and likewise avoids stock picking.
+It avoids over-exposure on any area of the economy, and likewise avoids stock picking.
  
 ## Adopting a strategy to rebalance
-There are two strategies currently supported, both aimed at buying low and either never selling or selling high.
-The default strategy is to avoid selling at all costs in order to avoid capital gains taxes.
+There are two strategies currently supported, both aimed at buying low.
+- There is [hard_rebalance](./src/pbal/hard_rebal.py) which will sell and buy in order to equalize the values all assets in your portfolio, adding or freeing up cash depending on the user input for [cash](./src/pbal/cli.py)
+- Then there is [try_avoid_sell](./src/pbal/try_avoid_sell.py) which will only buy assets to try to approach the target.  It raises the floor of your portfolio, buying low incrementally.  This avoids incurring capital gains taxes.  If you tell this strategy to free up case (giving the case option a negative sign), then it will sell your highest value assets first, using capital gains tax exposure as a tie-breaker.
+
+The default strategy is to avoid selling at all costs in order to avoid capital gains taxes, which would be [try_avoid_sell](./src/pbal/try_avoid_sell.py).
 
 ## Download Up-to-date portfolio data
 This code was written to use the IBKR Client Portal to automate rebalancing of a personal brokerage account.
 I have created a [Flex Query for myself](https://portal.interactivebrokers.com/AccountManagement/AmAuthentication?action=RM_FLEX_QUERIES) that creates a CSV in the format you see in the [tests](./tests/data).
+I can't share the Flex Query settings, but you should be able to figure them out.
+If you can't, then you probably should not be using this code.
+
 
 ## Install and run the cli
 You can use this as a CLI if you have your data saved as a csv:

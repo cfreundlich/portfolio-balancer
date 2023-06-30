@@ -3,6 +3,9 @@ from .strategy import Strategy
 
 
 class HardRebal(Strategy):
+    '''Sell and buy in order to equalize the values all assets in 
+    your portfolio, adding or freeing up cash depending on the user input for 
+    cash'''
     def _target(self, positions):
         return self._target_net_liquidity / len(positions)
 

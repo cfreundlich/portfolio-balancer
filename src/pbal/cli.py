@@ -12,7 +12,7 @@ DEFAULT_CSV = f"{Path.home()}/Downloads/positions-custom.csv"
 
 def _parser():
     parser = argparse.ArgumentParser(
-        description="A script to initialize a Strategy object and perform operations."
+        description="A script to help make trading decisions on a brokerage account."
     )
 
     # positional argument for the data file path with a default value
@@ -21,7 +21,7 @@ def _parser():
         "data",
         nargs="?",
         default=DEFAULT_CSV,
-        help=f"The data file to read. Default is {DEFAULT_CSV}.",
+        help=f"The file containing portfolio data. Default is {DEFAULT_CSV}.",
     )
 
     # named argument for the cash to invest
@@ -30,7 +30,7 @@ def _parser():
         "--cash",
         type=float,
         default=0.0,
-        help="The amount of cash to invest. Default is 0.",
+        help="The amount of cash to invest. Default is 0.  Negative values mean you want to free up some cash.  Positive values mean you have some more cash or margin you want to invest",
     )
 
     # named argument for the strategy to employ
@@ -39,7 +39,7 @@ def _parser():
         "--strategy",
         choices=list(STRATEGIES.keys()),
         default="try_avoid_sell",
-        help="Strategy to use to rebalance portfolio. Default is try_avoid_sell",
+        help="Strategy to use to rebalance portfolio. Default is try_avoid_sell.",
     )
 
     # named argument for verbosity
