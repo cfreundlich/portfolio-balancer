@@ -1,10 +1,15 @@
-def load(fname):
-    positions = dict()
-    with open(fname, "r") as f:
-        for l in f.readlines():
-            data = l.replace('"', "").rstrip("\n").split(",")
-            sym = data[0]
-            val = float(data[1])
-            positions[sym] = {"initial_value": val}
+import csv
 
-    return positions
+
+def load(fname):
+    # {'Symbol': 'FOO', 'PositionValue': '100.6', 'MarkPrice': '100.4', 'FifoPnlUnrealized': '30.2873'}
+    with open(fname, "r") as csvfile:
+        reader = csv.DictReader(csvfile)
+
+        positions = dict()
+        for p in reader:
+            for k in ["PositionValue", "MarkPrice", "FifoPnlUnrealized"]:
+                p[k] = float(p[k])
+            positions[p["Symbol"]] = p
+
+        return positions

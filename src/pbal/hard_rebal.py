@@ -13,13 +13,13 @@ class HardRebal(Strategy):
         keymap = []
         for k, p in positions.items():
             keymap.append(k)
-            b.append(self._target(positions) - p["initial_value"])
+            b.append(self._target(positions) - p["PositionValue"])
 
         # Solve for x in Ax = b using least squares method
         proposed_purchase, _, _, _ = np.linalg.lstsq(A, b, rcond=None)
         # also could do: np.linalg.solve(A, b)
 
         for k, x in zip(keymap, proposed_purchase):
-            positions[k]["change"] = round(x, -self._tol_zeros)
+            positions[k]["BuyVal"] = round(x, -self._tol_zeros)
 
         return positions

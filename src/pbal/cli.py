@@ -6,19 +6,22 @@ from .try_avoid_sell import TryAvoidSell
 from .csv import load
 
 
+STRATEGIES = {"hard_rebalance": HardRebal, "try_avoid_sell": TryAvoidSell}
+DEFAULT_CSV = f"{Path.home()}/Downloads/positions-custom.csv"
 
-def pbal():
+
+def _parser():
     parser = argparse.ArgumentParser(
         description="A script to initialize a Strategy object and perform operations."
     )
 
     # positional argument for the data file path with a default value
-    DEFAULT_CSV = f"{Path.home()}/Downloads/positions-custom.csv"
+
     parser.add_argument(
         "data",
         nargs="?",
         default=DEFAULT_CSV,
-        help=f'The data file to read. Default is {DEFAULT_CSV}.',
+        help=f"The data file to read. Default is {DEFAULT_CSV}.",
     )
 
     # named argument for the cash to invest
@@ -31,10 +34,7 @@ def pbal():
     )
 
     # named argument for the strategy to employ
-    STRATEGIES = {
-        'hard_rebalance': HardRebal,
-        'try_avoid_sell': TryAvoidSell
-    }
+
     parser.add_argument(
         "-s",
         "--strategy",
@@ -43,7 +43,11 @@ def pbal():
         help="Strategy to use to rebalance portfolio. Default is try_avoid_sell",
     )
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def pbal():
+    args = _parser()
 
     # use the arguments
     # assuming load function takes data file path as input
@@ -53,7 +57,7 @@ def pbal():
     strategy = STRATEGIES[args.strategy]
 
     # pprint(strategy(initial_positions, args.cash).proposal)
-    proposal = strategy(initial_positions, args.cash).proposal
-    table = [['symbol', 'initial_value', 'change']]
-    table += [[k, v['initial_value'], v['change']] for k,v in proposal.items()]
-    print(tabulate(table))
+    s = strategy(initial_positions, args.cash)
+
+    table = s.table()
+    print(tabulate(table[1:], headers=table[0]))
