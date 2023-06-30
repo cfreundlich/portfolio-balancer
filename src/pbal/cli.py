@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 from tabulate import tabulate
 from .hard_rebal import HardRebal
 from .try_avoid_sell import TryAvoidSell
@@ -12,11 +13,12 @@ def pbal():
     )
 
     # positional argument for the data file path with a default value
+    DEFAULT_CSV = f"{Path.home()}/Downloads/positions-custom.csv"
     parser.add_argument(
         "data",
         nargs="?",
-        default="data/positions-custom.csv",
-        help='The data file to read. Default is "data/positions-custom.csv".',
+        default=DEFAULT_CSV,
+        help=f'The data file to read. Default is {DEFAULT_CSV}.',
     )
 
     # named argument for the cash to invest
@@ -29,10 +31,14 @@ def pbal():
     )
 
     # named argument for the strategy to employ
+    STRATEGIES = {
+        'hard_rebalance': HardRebal,
+        'try_avoid_sell': TryAvoidSell
+    }
     parser.add_argument(
         "-s",
         "--strategy",
-        choices=["hard_rebalance", "h", "try_avoid_sell", "t"],
+        choices=list(STRATEGIES.keys()),
         default="try_avoid_sell",
         help="Strategy to use to rebalance portfolio. Default is try_avoid_sell",
     )
@@ -44,12 +50,7 @@ def pbal():
     initial_positions = load(args.data)
 
     # now Strategy is initialized with initial_positions and cash
-    if args.strategy in {"hard_rebalance", "h"}:
-        strategy = HardRebal
-    elif args.strategy in {"try_avoid_sell", "t"}:
-        strategy = TryAvoidSell
-    else:
-        raise ValueError(args.strategy)
+    strategy = STRATEGIES[args.strategy]
 
     # pprint(strategy(initial_positions, args.cash).proposal)
     proposal = strategy(initial_positions, args.cash).proposal
