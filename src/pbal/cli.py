@@ -39,7 +39,7 @@ def _parser():
         "--strategy",
         choices=list(STRATEGIES.keys()),
         default="try_avoid_sell",
-        help="Strategy to use to rebalance portfolio. Default is try_avoid_sell.",
+        help="Strategy to use to rebalance portfolio. Default is try_avoid_sell.  See https://github.com/cfreundlich/portfolio-balancer and look at code for details.",
     )
 
     # named argument for verbosity
@@ -47,7 +47,7 @@ def _parser():
         "-v",
         "--verbose",
         action='store_true',
-        help="Contorl printing",
+        help="Control printing",
     )
 
     return parser.parse_args()
