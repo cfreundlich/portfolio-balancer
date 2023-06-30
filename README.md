@@ -3,7 +3,9 @@ The basic idea of these portfolio balancing strategies is that you set a target 
 
 This makes trading very boring, but it minimizes variance without sacrificing expected value.  It also gives you some flexibility to buy low and sell high.
 
-## [Setting a target](#setting-a-target)
+Please check out my [companion blog post](https://cfreundlich.github.io/portfolio-balancer/) for more motivation.
+
+## Setting a target
 Basic idea of a target in this code is:
 - The individual wants a roughly equal investment in each asset in their portfolio.
 - You can pick whatever collection of assets you want, but the general idea is that you span a broad array of sectors and market capitalizations using low cost ETFs, for example, you may want to target 10% allocation to each of these ten ETFs:
@@ -24,7 +26,7 @@ It avoids over-exposure on any area of the economy, and likewise avoids stock pi
 ## Adopting a strategy to rebalance
 There are two strategies currently supported, both aimed at buying low.
 - There is [hard_rebalance](./src/pbal/hard_rebal.py) which will sell and buy in order to equalize the values all assets in your portfolio, adding or freeing up cash depending on the user input for [cash](./src/pbal/cli.py)
-- Then there is [try_avoid_sell](./src/pbal/try_avoid_sell.py) which will only buy assets to try to approach the target.  It raises the floor of your portfolio, buying low incrementally.  This avoids incurring capital gains taxes.  If you tell this strategy to free up case (giving the case option a negative sign), then it will sell your highest value assets first, using capital gains tax exposure as a tie-breaker.
+- Then there is [try_avoid_sell](./src/pbal/try_avoid_sell.py) which will only buy assets to try to approach the target.  It raises the floor of your portfolio, buying low incrementally.  This avoids incurring capital gains taxes.  If you give the cash option a negative sign when invoking this strategy, then it will sell your highest value assets first, using capital gains tax exposure as a tie-breaker.
 
 The default strategy is to avoid selling at all costs in order to avoid capital gains taxes, which would be [try_avoid_sell](./src/pbal/try_avoid_sell.py).
 
@@ -41,7 +43,7 @@ You can use this as a CLI if you have your data saved as a csv:
 pip install .
 pbal
 ```
-This will suggest some trades you can make to push your portfolio allocations toward the target described in #setting-a-target.
+This will suggest some trades you can make to push your portfolio allocations toward the target.
 
 Use the `--help` flag to explore ways to modify your strategy.
 
