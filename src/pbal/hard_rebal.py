@@ -23,6 +23,6 @@ class HardRebal(Strategy):
         # also could do: np.linalg.solve(A, b)
 
         for k, x in zip(keymap, proposed_purchase):
-            positions[k]["BuyVal"] = round(x, 2)
+            positions[k]["BuyVal"] = round(x, -self.increment, )
 
         return positions

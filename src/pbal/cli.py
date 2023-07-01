@@ -33,6 +33,16 @@ def _parser():
         help="The amount of cash to invest. Default is 0.  Negative values mean you want to free up some cash.  Positive values mean you have some more cash or margin you want to invest",
     )
 
+    # named argument for the minimum increment of cash to invest at a time
+    parser.add_argument(
+        "-i",
+        "--increment",
+        choices=range(1, 5),
+        default=3,
+        type=int,
+        help="The minimal investment amount order of magnitude. This avoids suggesting small transactions. Default is 3, which corresponds to $1000. Setting this arg to anything than 1 might lead to overinvesting by less than the order of magnitude of the increment",
+    )
+
     # named argument for the strategy to employ
     parser.add_argument(
         "-s",
@@ -64,7 +74,7 @@ def pbal():
     strategy = STRATEGIES[args.strategy]
 
     # pprint(strategy(initial_positions, args.cash).proposal)
-    s = strategy(initial_positions, args.cash, args.verbose)
+    s = strategy(initial_positions, args.cash, args.verbose, args.increment)
 
     table = s.table()
     print(tabulate(table[1:], headers=table[0]))

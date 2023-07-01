@@ -17,13 +17,13 @@ class TryAvoidSell(Strategy):
             for k, v in positions.items()
         ]
         heapq.heapify(position_heap)
-        increment = 1000
-        while sign * cash_to_invest >= increment:
+        delta = 10 ** self.increment
+        while sign * cash_to_invest >= delta:
             head = heapq.heappop(position_heap)
-            edit = head[0] + increment
-            new = (edit, head[1] + increment, head[2])
+            edit = head[0] + delta
+            new = (edit, head[1] + delta, head[2])
             heapq.heappush(position_heap, new)
-            cash_to_invest -= sign * increment
+            cash_to_invest -= sign * delta
         for final_val, _, sym in position_heap:
             init_val = positions[sym]["PositionValue"]
             positions[sym]["BuyVal"] = sign * final_val - init_val
