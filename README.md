@@ -51,7 +51,7 @@ Suppose you have a portfolio with the following positions in the CSV format this
 ```
 Let's assume this file is in the location `~/Downloads/positions-custom.csv`.  Note that this is the default location the software will look for the CSV, but I will show the full command in the example below.
 
-Suppose your uncle just gave you $4000, and you decide you want to take an additional $1000 in margin from your broker, but you don't want to bother with trades less than $100, so you use the following command and output:
+Suppose you just pawned a $4000 diamond watch you "found" in a parking lot, and you decide you want to take an additional $1000 in margin from your broker, so that you plow it into your retirement.  You also don't want to bother with trades less than $100, so you use the following command and output:
 ```
 ❯ pbal ~/Downloads/positions-custom.csv -i 2 -c 5000
 Symbol      InitialValue    MarkPrice    BuyVal    BuyShares
