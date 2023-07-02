@@ -2,8 +2,7 @@
 The basic idea of these portfolio balancing strategies is that you set a target and periodically (no more than once a quarter) trade in order to get closer to these targets.
 
 This makes trading very boring, but it minimizes variance without sacrificing expected value.  It also gives you some flexibility to buy low and sell high.
-
-Please check out my [companion blog post](https://cfreundlich.github.io/portfolio-balancer/) for more motivation.
+Check out my [companion blog post](https://cfreundlich.github.io/portfolio-balancer/) for more motivation.
 
 ## Theory
 ### Setting a target
@@ -37,6 +36,8 @@ This code was written with the the IBKR margin trading account in mind.
 To make downloading the CSV easier, I created a [Flex Query](https://portal.interactivebrokers.com/AccountManagement/AmAuthentication?action=RM_FLEX_QUERIES) that creates a CSV in the format you see in the [tests](./tests/data).
 I can't share the Flex Query settings, but you should be able to figure them out.
 If you can't, then you probably should not be using this code.
+
+If you do not use IBKR, then creating the CSV is up-to-you, but it should not very difficult.
 
 
 ### Install and run the cli
